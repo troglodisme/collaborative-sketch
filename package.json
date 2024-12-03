@@ -1,16 +1,11 @@
 {
-  "name": "sockets_p5",
+  "name": "collaborative-drawing",
   "version": "1.0.0",
-  "description": "This is an example for how to use sockets with p5.js.",
-  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node api/server.js"
   },
-  "author": "Daniel Shiffman",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1",
-    "socket.io": "^4.8.1"
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4"
   }
 }

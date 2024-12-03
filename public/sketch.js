@@ -1,54 +1,41 @@
-// ITP Networked Media, Fall 2014
-// https://github.com/shiffman/itp-networked-media
-// Daniel Shiffman
-
-// Keep track of our socket connection
+// Client-side script
 var socket;
+let colorPicker;
 
 function setup() {
   createCanvas(400, 400);
   background(0);
-  // Start a socket connection to the server
-  // Some day we would run this server somewhere else
-  socket = io.connect('http://localhost:3000');
-  // We make a named event called 'mouse' and write an
-  // anonymous callback function
-  socket.on('mouse',
-    // When we receive data
-    function(data) {
-      console.log("Got: " + data.x + " " + data.y);
-      // Draw a blue circle
-      fill(0,0,255);
-      noStroke();
-      ellipse(data.x, data.y, 20, 20);
-    }
-  );
-}
 
-function draw() {
-  // Nothing
+  // Create a color picker
+  colorPicker = createColorPicker('#ff0000');
+  colorPicker.position(10, height + 10);
+
+  // Connect to the socket server
+  socket = io.connect(window.location.origin);
+
+  // Handle incoming 'mouse' events
+  socket.on('mouse', function (data) {
+    fill(data.color);
+    noStroke();
+    ellipse(data.x, data.y, 20, 20);
+  });
 }
 
 function mouseDragged() {
-  // Draw some white circles
-  fill(255);
+  // Draw on the canvas
+  fill(colorPicker.color());
   noStroke();
-  ellipse(mouseX,mouseY,20,20);
-  // Send the mouse coordinates
-  sendmouse(mouseX,mouseY);
+  ellipse(mouseX, mouseY, 20, 20);
+
+  // Send drawing data to the server
+  sendmouse(mouseX, mouseY, colorPicker.color().toString());
 }
 
-// Function for sending to the socket
-function sendmouse(xpos, ypos) {
-  // We are sending!
-  console.log("sendmouse: " + xpos + " " + ypos);
-  
-  // Make a little object with  and y
+function sendmouse(xpos, ypos, color) {
   var data = {
     x: xpos,
-    y: ypos
+    y: ypos,
+    color: color
   };
-
-  // Send that object to the socket
-  socket.emit('mouse',data);
+  socket.emit('mouse', data);
 }
