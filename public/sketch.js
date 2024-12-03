@@ -1,4 +1,5 @@
-// Client-side script
+//Inspired by Shiffman 12.1
+
 var socket;
 let colorPicker;
 
