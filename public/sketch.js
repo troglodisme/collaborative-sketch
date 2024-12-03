@@ -1,6 +1,4 @@
-// ITP Networked Media, Fall 2014
-// https://github.com/shiffman/itp-networked-media
-// Daniel Shiffman
+// Updated Daniel Shiffman sketch to current version of socket.io
 
 // Keep track of our socket connection
 var socket;
